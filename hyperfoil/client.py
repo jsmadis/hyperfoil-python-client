@@ -4,12 +4,12 @@ import requests
 
 from hyperfoil import resources
 from hyperfoil.clients import BenchmarkClient
-
+from hyperfoil.errors import ApiClientError
 
 
 class HyperfoilClient:
     def __init__(self, url: str) -> None:
-        self._rest = RestApiClient(url)
+        self._rest = RestApiClient(url=url)
         self._benchmark = BenchmarkClient(self, instance_klass=resources.Benchmark)
 
     @property
@@ -23,6 +23,10 @@ class HyperfoilClient:
     @property
     def benchmark(self) -> 'BenchmarkClient':
         return self._benchmark
+
+    @property
+    def url(self) -> str:
+        return self._rest.url
 
 
 class RestApiClient:
@@ -41,11 +45,17 @@ class RestApiClient:
         params = params or {}
         response = requests.request(method=method, url=full_url, headers=headers,
                                     params=params, verify=self._verify_ssl, **kwargs)
-        # TODO: add response processing
-        return response
+        return self._process_response(response)
 
     def get(self, *args, **kwargs):
         return self.request('GET', *args, **kwargs)
 
     def post(self, *args, **kwargs):
         return self.request('POST', *args, **kwargs)
+
+    @classmethod
+    def _process_response(cls, response: requests.Response) -> requests.Response:
+        # TODO: log
+        if not response.ok:
+            raise ApiClientError(response.status_code, response.content)
+        return response

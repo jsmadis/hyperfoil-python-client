@@ -19,7 +19,7 @@ class BenchmarkClient(DefaultClient):
         response = self.rest.post(url=self.url, json=params, **kwargs)
         return response.ok
 
-    def read(self, name: str, **kwargs):
+    def read(self, name: str):
         return self._instance_klass(client=self, entity_id=name)
 
 

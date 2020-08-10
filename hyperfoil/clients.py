@@ -20,6 +20,4 @@ class BenchmarkClient(DefaultClient):
         return response.ok
 
     def read(self, name: str, **kwargs):
-        url = self.url + f"/{name}"
-        response = self.rest.get(url=url, **kwargs)
-        return self._create_instance(response)
+        return self._instance_klass(client=self, entity_id=name)

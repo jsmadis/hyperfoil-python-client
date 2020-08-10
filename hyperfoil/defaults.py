@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING, Any, Iterator
 import requests
 import yaml
 
+from hyperfoil.utils import extract_response
+
 if TYPE_CHECKING:
     from hyperfoil.client import HyperfoilClient, RestApiClient
 
@@ -29,24 +31,36 @@ class DefaultClient:
     def url(self) -> str:
         return self.rest.url
 
+    def fetch(self, entity_id: str = "", **kwargs):
+        url = self._entity_url(entity_id=entity_id)
+        response = self.rest.get(url=url, **kwargs)
+        return extract_response(response)
+
     def _create_instance(self, response: requests.Response, klass=None):
         klass = klass or self._instance_klass
+        extracted = extract_response(response)
         if 'text/vnd.yaml' in response.headers.get("Content-Type", ""):
-            extracted = yaml.load(response.content.decode('utf-8'), Loader=yaml.Loader)
             return klass(client=self, entity=extracted, content_type='text/vnd.yaml') if klass else extracted
 
-        return klass(client=self, entity=response.json(), content_type='application/json')
+        return klass(client=self, entity=extracted, content_type='application/json')
+
+    def _entity_url(self, entity_id: str):
+        if not entity_id:
+            return self.url
+        return self.url + '/' + entity_id
 
 
 class DefaultResource(collections.abc.MutableMapping):
     def __init__(self, client: DefaultClient = None, entity: dict = None,
-                 content_type: str = '') -> None:
+                 content_type: str = '', entity_id: str = "") -> None:
         self._entity = entity
         self._client = client
         self._content_type = content_type
+        self._entity_id = entity_id
 
     @property
     def entity(self) -> dict:
+        self._lazy_load()
         return self._entity
 
     def get(self, item):
@@ -69,3 +83,16 @@ class DefaultResource(collections.abc.MutableMapping):
 
     def __iter__(self) -> Iterator:
         return iter(self.entity)
+
+    def read(self, **kwargs) -> 'DefaultResource':
+        self._entity = None
+        self._lazy_load(**kwargs)
+        return self
+
+    def _lazy_load(self, **kwargs):
+        if not self._entity:
+            # lazy load
+            self._entity = self._client.fetch(entity_id=self._entity_id, **kwargs)
+        return self
+
+

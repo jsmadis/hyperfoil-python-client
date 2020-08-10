@@ -11,7 +11,7 @@ class BenchmarkClient(DefaultClient):
     def url(self):
         return self.hyperfoil_client.url + '/benchmark'
 
-    def all(self, **kwargs) -> List[DefaultResource]:
+    def list(self, **kwargs) -> List[DefaultResource]:
         response = self.rest.get(url=self.url, **kwargs)
         return [self._instance_klass(self, entity_id=name) for name in response.json()]
 
@@ -31,7 +31,7 @@ class RunClient(DefaultClient):
     def url(self):
         return self.hyperfoil_client.url + '/run'
 
-    def all(self, **kwargs) -> List[DefaultResource]:
+    def list(self, **kwargs) -> List[DefaultResource]:
         response = self.rest.get(url=self.url, **kwargs)
         return [self._instance_klass(self, entity_id=name) for name in response.json()]
 

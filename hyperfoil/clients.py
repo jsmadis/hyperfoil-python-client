@@ -1,4 +1,6 @@
-from hyperfoil.defaults import DefaultClient
+from typing import List
+
+from hyperfoil.defaults import DefaultClient, DefaultResource
 
 
 class BenchmarkClient(DefaultClient):
@@ -9,11 +11,9 @@ class BenchmarkClient(DefaultClient):
     def url(self):
         return self.hyperfoil_client.url + '/benchmark'
 
-    def all(self, **kwargs):
+    def all(self, **kwargs) -> List[DefaultResource]:
         response = self.rest.get(url=self.url, **kwargs)
-        # TODO: Create list of benchmarks resources
-        # TODO: Process response
-        return response
+        return [self._instance_klass(self, entity_id=name) for name in response.json()]
 
     def create(self, params: dict = None, **kwargs):
         response = self.rest.post(url=self.url, json=params, **kwargs)

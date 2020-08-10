@@ -1,8 +1,7 @@
 import collections
-from typing import TYPE_CHECKING, Any, Iterator
+from typing import TYPE_CHECKING, Any, Iterator, overload
 
 import requests
-import yaml
 
 from hyperfoil.utils import extract_response
 

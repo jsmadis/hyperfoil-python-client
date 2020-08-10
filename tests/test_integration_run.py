@@ -1,3 +1,5 @@
+from time import sleep
+
 import pytest
 
 
@@ -38,3 +40,12 @@ def test_recent_sessions(benchmark, create_benchmark, run):
     assert run_resource
     recent_sessions = run.recent_sessions(run_resource['id'])
     assert recent_sessions == {}
+
+
+def test_total_sessions(benchmark, create_benchmark, run):
+    # TODO: add long running benchmark so we can check total sessions
+    run_resource = benchmark.start(create_benchmark)
+    assert run_resource
+    sleep(60)
+    total_sessions = run.total_sessions(run_resource['id'])
+    assert total_sessions == {}

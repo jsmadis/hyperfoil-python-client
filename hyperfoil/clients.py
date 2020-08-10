@@ -59,3 +59,8 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + "/sessions/recent"
         response = self.rest.get(url=url, **kwargs)
         return response.json()
+
+    def total_sessions(self, run_id: str, **kwargs) -> dict:
+        url = self._entity_url(run_id) + '/sessions/total'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()

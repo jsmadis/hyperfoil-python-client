@@ -19,3 +19,14 @@ def test_get_run_by_id(benchmark, create_benchmark, run):
     assert run_read.get('id') == run_resource['id']
     assert run_read.get('benchmark') == create_benchmark
     assert run_read.get('errors') == []
+
+
+def test_kill_run(benchmark, create_benchmark, run):
+    run_resource = benchmark.start(create_benchmark)
+    assert run_resource
+    killed = run.kill(run_resource['id'])
+    assert killed
+    run_read = run.read(run_resource['id'])
+    assert run_read
+    assert run_read.get('id') == run_resource['id']
+    assert bool(run_read.get('cancelled'))

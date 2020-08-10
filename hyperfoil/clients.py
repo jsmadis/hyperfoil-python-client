@@ -43,3 +43,8 @@ class RunClient(DefaultClient):
 
     def read(self, run_id: str) -> Run:
         return self._instance_klass(client=self, entity_id=run_id)
+
+    def kill(self, run_id: str, **kwargs) -> bool:
+        url = self._entity_url(run_id) + '/kill'
+        response = self.rest.get(url=url, **kwargs)
+        return response.ok

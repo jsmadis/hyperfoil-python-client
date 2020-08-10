@@ -35,13 +35,14 @@ class DefaultClient:
         response = self.rest.get(url=url, **kwargs)
         return extract_response(response)
 
-    def _create_instance(self, response: requests.Response, klass=None):
+    def _create_instance(self, response: requests.Response, klass=None, client=None):
+        client = client or self
         klass = klass or self._instance_klass
         extracted = extract_response(response)
         if 'text/vnd.yaml' in response.headers.get("Content-Type", ""):
-            return klass(client=self, entity=extracted, content_type='text/vnd.yaml') if klass else extracted
+            return klass(client=client, entity=extracted, content_type='text/vnd.yaml') if klass else extracted
 
-        return klass(client=self, entity=extracted, content_type='application/json')
+        return klass(client=client, entity=extracted, content_type='application/json')
 
     def _entity_url(self, entity_id: str):
         if not entity_id:
@@ -93,5 +94,3 @@ class DefaultResource(collections.abc.MutableMapping):
             # lazy load
             self._entity = self._client.fetch(entity_id=self._entity_id, **kwargs)
         return self
-
-

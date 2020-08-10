@@ -1,6 +1,7 @@
 import os
 
 import pytest
+import yaml
 from dotenv import load_dotenv
 
 from hyperfoil import HyperfoilClient
@@ -22,3 +23,15 @@ def client(url) -> HyperfoilClient:
 @pytest.fixture(scope='session')
 def benchmark(client):
     return client.benchmark
+
+
+@pytest.fixture(scope='session')
+def run(client):
+    return client.run
+
+
+@pytest.fixture
+def benchmark_yaml():
+    with open('benchmarks/hello-world.yaml') as file:
+        data = file.read()
+    return yaml.load(data, Loader=yaml.Loader)

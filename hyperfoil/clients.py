@@ -7,7 +7,7 @@ class BenchmarkClient(DefaultClient):
 
     @property
     def url(self):
-        return self.url + '/benchmark'
+        return self.hyperfoil_client.url + '/benchmark'
 
     def all(self, **kwargs):
         response = self.rest.get(url=self.url, **kwargs)
@@ -17,8 +17,7 @@ class BenchmarkClient(DefaultClient):
 
     def create(self, params: dict = None, **kwargs):
         response = self.rest.post(url=self.url, json=params, **kwargs)
-        # TODO: Process response
-        return response
+        return response.ok
 
     def read(self, name: str, **kwargs):
         url = self.url + f"/{name}"

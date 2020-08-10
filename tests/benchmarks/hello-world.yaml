@@ -1,0 +1,11 @@
+name: hello-world
+agents:
+  agent-one:
+http:
+  host: https://httpbin.org
+duration: 5s
+usersPerSec: 5
+scenario:
+- test:
+  - httpRequest:
+      GET: /get

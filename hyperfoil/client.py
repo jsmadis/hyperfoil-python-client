@@ -2,10 +2,25 @@ from urllib.parse import urljoin
 
 import requests
 
+from hyperfoil.clients import BenchmarkClient
+
 
 class HyperfoilClient:
     def __init__(self, url: str) -> None:
         self._rest = RestApiClient(url)
+        self._benchmark = BenchmarkClient(self)
+
+    @property
+    def hyperfoil_client(self) -> 'HyperfoilClient':
+        return self
+
+    @property
+    def rest(self) -> 'RestApiClient':
+        return self._rest
+
+    @property
+    def benchmark(self) -> 'BenchmarkClient':
+        return self._benchmark
 
 
 class RestApiClient:
@@ -13,7 +28,11 @@ class RestApiClient:
         self._url = url
         self._verify_ssl = verify_ssl
 
-    def request(self, method='GET', url=None, path='', params:dict = None,
+    @property
+    def url(self) -> str:
+        return self._url
+
+    def request(self, method='GET', url=None, path='', params: dict = None,
                 headers: dict = None, **kwargs):
         full_url = url if url else urljoin(self._url, path)
         headers = headers or {}

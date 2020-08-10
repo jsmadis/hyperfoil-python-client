@@ -30,3 +30,11 @@ def test_kill_run(benchmark, create_benchmark, run):
     assert run_read
     assert run_read.get('id') == run_resource['id']
     assert bool(run_read.get('cancelled'))
+
+
+def test_recent_sessions(benchmark, create_benchmark, run):
+    #TODO: add long running benchmark so we can check recent session
+    run_resource = benchmark.start(create_benchmark)
+    assert run_resource
+    recent_sessions = run.recent_sessions(run_resource['id'])
+    assert recent_sessions == {}

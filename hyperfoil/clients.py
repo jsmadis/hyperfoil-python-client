@@ -54,3 +54,8 @@ class RunClient(DefaultClient):
         response = self.rest.get(url=url, **kwargs)
         # TODO: add test with run that takes longer time
         return response.content
+
+    def recent_sessions(self, run_id: str, **kwargs):
+        url = self._entity_url(run_id) + "/sessions/recent"
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()

@@ -48,3 +48,9 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/kill'
         response = self.rest.get(url=url, **kwargs)
         return response.ok
+
+    def sessions(self, run_id: str, **kwargs) -> str:
+        url = self._entity_url(run_id) + '/sessions'
+        response = self.rest.get(url=url, **kwargs)
+        # TODO: add test with run that takes longer time
+        return response.content

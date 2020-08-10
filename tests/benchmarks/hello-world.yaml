@@ -3,8 +3,8 @@ agents:
   agent-one:
 http:
   host: https://httpbin.org
-duration: 5s
-usersPerSec: 5
+duration: 1s
+usersPerSec: 1
 scenario:
 - test:
   - httpRequest:

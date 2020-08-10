@@ -63,6 +63,10 @@ class DefaultResource(collections.abc.MutableMapping):
         self._lazy_load()
         return self._entity
 
+    @property
+    def client(self) -> DefaultClient:
+        return self._client
+
     def get(self, item):
         return self.entity.get(item)
 

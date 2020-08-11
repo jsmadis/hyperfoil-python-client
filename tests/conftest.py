@@ -30,7 +30,7 @@ def run(client):
     return client.run
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def benchmark_yaml():
     with open('benchmarks/hello-world.yaml') as file:
         data = file.read()

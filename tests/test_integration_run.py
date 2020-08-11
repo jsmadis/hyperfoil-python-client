@@ -50,7 +50,8 @@ def test_recent_sessions(finished_benchmark, create_benchmark, run):
 def test_total_sessions(finished_benchmark, create_benchmark, run):
     # TODO: add long running benchmark so we can check total sessions
     total_sessions = run.total_sessions(finished_benchmark['id'])
-    assert total_sessions == {}
+    assert total_sessions
+    assert total_sessions['main']
 
 
 def test_benchmark_resource_start(benchmark, create_benchmark, run):

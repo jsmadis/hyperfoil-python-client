@@ -106,3 +106,33 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/benchmark'
         response = self.rest.get(url=url, **kwargs)
         return self._create_instance(response, klass=Benchmark, client=self.parent.benchmark)
+
+
+class UtilsClient(DefaultClient):
+    def __init__(self, parent=None, instance_klass=None) -> None:
+        super().__init__(parent, instance_klass)
+
+    def agents(self, **kwargs) -> List[str]:
+        url = self.url + '/agents'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()
+
+    def log(self, **kwargs) -> str:
+        url = self.url + '/log'
+        response = self.rest.get(url=url, **kwargs)
+        return response.content.decode('utf-8')
+
+    def agent_logs(self, agent_name: str, **kwargs) -> str:
+        url = self.url + '/log/' + agent_name
+        response = self.rest.get(url=url, **kwargs)
+        return response.content.decode('utf-8')
+
+    def shutdown(self, **kwargs) -> bool:
+        url = self.url + '/shutdown'
+        response = self.rest.get(url=url, **kwargs)
+        return response.ok
+
+    def version(self, **kwargs) -> dict:
+        url = self.url + '/version'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()

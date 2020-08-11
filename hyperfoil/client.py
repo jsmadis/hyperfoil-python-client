@@ -1,9 +1,10 @@
+from typing import List
 from urllib.parse import urljoin
 
 import requests
 
 from hyperfoil import resources
-from hyperfoil.clients import BenchmarkClient, RunClient
+from hyperfoil.clients import BenchmarkClient, RunClient, UtilsClient
 from hyperfoil.errors import ApiClientError
 
 
@@ -12,6 +13,7 @@ class HyperfoilClient:
         self._rest = RestApiClient(url=url)
         self._benchmark = BenchmarkClient(self, instance_klass=resources.Benchmark)
         self._run = RunClient(self, instance_klass=resources.Run)
+        self._utils = UtilsClient(self)
 
     @property
     def hyperfoil_client(self) -> 'HyperfoilClient':
@@ -32,6 +34,21 @@ class HyperfoilClient:
     @property
     def url(self) -> str:
         return self._rest.url
+
+    def agents(self, **kwargs) -> List[str]:
+        return self._utils.agents(**kwargs)
+
+    def log(self, **kwargs) -> str:
+        return self._utils.log(**kwargs)
+
+    def agent_logs(self, agent_name: str, **kwargs) -> str:
+        return self._utils.agent_logs(agent_name, **kwargs)
+
+    def shutdown(self, **kwargs) -> bool:
+        return self._utils.shutdown(**kwargs)
+
+    def version(self, **kwargs):
+        return self._utils.version(**kwargs)
 
 
 class RestApiClient:

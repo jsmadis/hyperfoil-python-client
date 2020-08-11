@@ -143,3 +143,15 @@ def test_custom_stats(finished_benchmark, run):
 def test_custom_stats_resource(finished_benchmark):
     stats = finished_benchmark.custom_stats()
     assert stats == []
+
+
+def test_run_get_benchmark(run, finished_benchmark, benchmark_yaml):
+    benchmark = run.benchmark(finished_benchmark['id'])
+    assert benchmark
+    assert benchmark.entity == benchmark_yaml
+
+
+def test_run_get_benchmark_resource(finished_benchmark, benchmark_yaml):
+    benchmark = finished_benchmark.benchmark()
+    assert benchmark
+    assert benchmark.entity == benchmark_yaml

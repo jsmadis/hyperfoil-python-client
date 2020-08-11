@@ -101,3 +101,8 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/stats/histogram'
         response = self.rest.get(url=url, params=params, **kwargs)
         return response.json()
+
+    def benchmark(self, run_id: str, **kwargs) -> Benchmark:
+        url = self._entity_url(run_id) + '/benchmark'
+        response = self.rest.get(url=url, **kwargs)
+        return self._create_instance(response, klass=Benchmark, client=self.parent.benchmark)

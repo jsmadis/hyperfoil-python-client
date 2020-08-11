@@ -49,3 +49,12 @@ def test_total_sessions(benchmark, create_benchmark, run):
     sleep(60)
     total_sessions = run.total_sessions(run_resource['id'])
     assert total_sessions == {}
+
+
+def test_benchmark_resource_start(benchmark, create_benchmark, run):
+    mark = benchmark.read(create_benchmark)
+    run_resource = mark.start()
+    assert run_resource
+    run_read = run.read(run_id=run_resource['id'])
+    assert run_read
+    assert run_read.get('id') == run_resource['id']

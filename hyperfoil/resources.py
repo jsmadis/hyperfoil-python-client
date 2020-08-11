@@ -27,3 +27,6 @@ class Run(DefaultResource):
 
     def total_sessions(self):
         return self.client.total_sessions(self._entity_id)
+
+    def connections(self):
+        return self.client.connections(self._entity_id)

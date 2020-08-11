@@ -64,3 +64,8 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/sessions/total'
         response = self.rest.get(url=url, **kwargs)
         return response.json()
+
+    def connections(self, run_id: str, **kwargs) -> str:
+        url = self._entity_url(run_id) + '/connections'
+        response = self.rest.get(url=url, **kwargs)
+        return response.content.decode('utf-8')

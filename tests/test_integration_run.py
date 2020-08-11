@@ -74,3 +74,37 @@ def test_all_stats(finished_benchmark, create_benchmark, run):
     assert stats
     assert stats['info']['id'] == finished_benchmark['id']
     assert stats['info']['benchmark'] == create_benchmark
+
+
+def test_recent_stats(finished_benchmark, run):
+    stats = run.recent_stats(finished_benchmark['id'])
+    assert stats
+    assert stats['status'] == 'TERMINATED'
+
+
+def test_recent_stats_resources(finished_benchmark):
+    stats = finished_benchmark.recent_stats()
+    assert stats
+    assert stats['status'] == 'TERMINATED'
+
+
+def test_total_stats(finished_benchmark, run):
+    stats = run.total_stats(finished_benchmark['id'])
+    assert stats
+    assert stats['status'] == 'TERMINATED'
+
+
+def test_total_stats_resource(finished_benchmark):
+    stats = finished_benchmark.total_stats()
+    assert stats
+    assert stats['status'] == 'TERMINATED'
+
+
+def test_custom_stats(finished_benchmark, run):
+    stats = run.custom_stats(finished_benchmark['id'])
+    assert stats == []
+
+
+def test_custom_stats_resource(finished_benchmark):
+    stats = finished_benchmark.custom_stats()
+    assert stats == []

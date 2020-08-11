@@ -75,3 +75,29 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/stats/all'
         response = self.rest.get(url=url, headers=headers, **kwargs)
         return response.json()
+
+    def recent_stats(self, run_id: str, **kwargs) -> dict:
+        url = self._entity_url(run_id) + '/stats/recent'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()
+
+    def total_stats(self, run_id: str, **kwargs) -> dict:
+        url = self._entity_url(run_id) + '/stats/total'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()
+
+    def custom_stats(self, run_id: str, **kwargs) -> dict:
+        url = self._entity_url(run_id) + '/stats/custom'
+        response = self.rest.get(url=url, **kwargs)
+        return response.json()
+
+    def histogram_stats(self, run_id: str, phase: str, step_id: int, metric: str, **kwargs) -> dict:
+        # TODO: add tests
+        params = {
+            'phase': phase,
+            'stepId': step_id,
+            'metric': metric
+        }
+        url = self._entity_url(run_id) + '/stats/histogram'
+        response = self.rest.get(url=url, params=params, **kwargs)
+        return response.json()

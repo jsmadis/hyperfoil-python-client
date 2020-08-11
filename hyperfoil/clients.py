@@ -69,3 +69,9 @@ class RunClient(DefaultClient):
         url = self._entity_url(run_id) + '/connections'
         response = self.rest.get(url=url, **kwargs)
         return response.content.decode('utf-8')
+
+    def all_stats(self, run_id: str, **kwargs) -> dict:
+        headers = {'Accept': 'application/json'}
+        url = self._entity_url(run_id) + '/stats/all'
+        response = self.rest.get(url=url, headers=headers, **kwargs)
+        return response.json()

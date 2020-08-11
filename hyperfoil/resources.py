@@ -30,3 +30,6 @@ class Run(DefaultResource):
 
     def connections(self):
         return self.client.connections(self._entity_id)
+
+    def all_stats(self):
+        return self.client.all_stats(self._entity_id)

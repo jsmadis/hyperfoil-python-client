@@ -67,3 +67,14 @@ def test_run_connections(benchmark, create_benchmark, run):
     sleep(60)
     connections = run.connections(run_resource['id'])
     assert connections == ''
+
+
+def test_all_stats(benchmark, create_benchmark, run):
+    # TODO add long running test
+    run_resource = benchmark.start(create_benchmark)
+    assert run_resource
+    sleep(60)
+    stats = run.all_stats(run_resource['id'])
+    assert stats
+    assert stats['info']['id'] == run_resource['id']
+    assert stats['info']['benchmark'] == create_benchmark

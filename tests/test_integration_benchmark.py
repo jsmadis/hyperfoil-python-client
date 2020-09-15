@@ -25,3 +25,16 @@ def test_start(benchmark, benchmark_yaml):
     assert run['id']
     assert isinstance(run, Run)
     assert isinstance(run.client, RunClient)
+
+
+def test_benchmark_with_file(benchmark, benchmark_file):
+    files = {
+        'benchmark': ('file-benchmark.hf.yaml', open('benchmarks/file-benchmark.hf.yaml')),
+        'file': ('usernames.txt', open('benchmarks/usernames.txt'))
+    }
+    assert benchmark.create(files=files)
+    run = benchmark.start(benchmark_file['name'])
+    assert run
+    assert run['id']
+    assert isinstance(run, Run)
+    assert isinstance(run.client, RunClient)

@@ -35,3 +35,10 @@ def benchmark_yaml():
     with open('benchmarks/hello-world.yaml') as file:
         data = file.read()
     return yaml.load(data, Loader=yaml.Loader)
+
+
+@pytest.fixture(scope='session')
+def benchmark_file():
+    with open('benchmarks/file-benchmark.hf.yaml') as file:
+        data = file.read()
+    return yaml.load(data, Loader=yaml.Loader)

@@ -30,7 +30,8 @@ def test_start(benchmark, benchmark_yaml):
 def test_benchmark_with_file(benchmark, benchmark_file):
     files = {
         'benchmark': ('file-benchmark.hf.yaml', open('benchmarks/file-benchmark.hf.yaml')),
-        'file': ('usernames.txt', open('benchmarks/usernames.txt'))
+        'file': ('usernames.txt', open('benchmarks/usernames.txt')),
+        'test': ('test.txt', open('benchmarks/test.txt'))
     }
     assert benchmark.create(files=files)
     run = benchmark.start(benchmark_file['name'])

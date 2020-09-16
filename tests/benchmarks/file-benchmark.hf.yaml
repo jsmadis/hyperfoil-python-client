@@ -11,3 +11,8 @@ scenario:
       POST: /post
       body:
         fromFile: usernames.txt
+- test2:
+  - httpRequest:
+      POST: /post
+      body:
+        fromFile: test.txt

@@ -6,7 +6,6 @@ import requests
 from hyperfoil import resources
 from hyperfoil.clients import BenchmarkClient, RunClient, UtilsClient
 from hyperfoil.errors import ApiClientError
-from hyperfoil.factories.hyperfoil_factory import HyperfoilFactory
 
 
 class HyperfoilClient:
@@ -15,9 +14,6 @@ class HyperfoilClient:
         self._benchmark = BenchmarkClient(self, instance_klass=resources.Benchmark)
         self._run = RunClient(self, instance_klass=resources.Run)
         self._utils = UtilsClient(self)
-
-    def hyperfoil_factory(self) -> 'HyperfoilFactory':
-        return HyperfoilFactory(self)
 
     @property
     def hyperfoil_client(self) -> 'HyperfoilClient':

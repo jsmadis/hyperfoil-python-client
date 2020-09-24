@@ -2,7 +2,7 @@ from io import StringIO
 
 import pytest
 
-from hyperfoil.factories.hyperfoil_factory import HyperfoilFactory
+from hyperfoil.factories import HyperfoilFactory
 
 
 @pytest.fixture(scope='function')

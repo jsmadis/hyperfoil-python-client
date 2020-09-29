@@ -11,7 +11,7 @@ class BenchmarkFactory:
     def create(self):
         return self._benchmark
 
-    def load_benchmark(self, stream: Union[io.StringIO, io.FileIO]) -> 'BenchmarkFactory':
+    def load_benchmark(self, stream) -> 'BenchmarkFactory':
         benchmark = yaml.load(stream, Loader=yaml.Loader)
         self._benchmark.update(benchmark)
         return self

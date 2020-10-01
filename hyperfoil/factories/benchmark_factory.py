@@ -1,6 +1,3 @@
-import io
-from typing import Union
-
 import yaml
 
 
@@ -18,8 +15,8 @@ class BenchmarkFactory:
 
     def add_host(self, host: str, shared_connections: int, **kwargs) -> 'BenchmarkFactory':
         self._benchmark['http'].append({
-            host: host,
-            shared_connections: shared_connections,
+            'host': host,
+            'shared_connections': shared_connections,
             **kwargs
         })
         return self

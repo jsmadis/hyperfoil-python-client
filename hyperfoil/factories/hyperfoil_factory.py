@@ -46,5 +46,6 @@ class HyperfoilFactory:
         file = StringIO()
         csv_writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL, **kwargs)
         csv_writer.writerows(rows)
+        file.seek(0)
         self.file(file_name, file)
         return self

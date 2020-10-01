@@ -27,13 +27,12 @@ class HyperfoilFactory:
         self._client.benchmark.create(files=self._files)
         return self._client.benchmark.read(self._benchmark['name'])
 
-    def benchmark(self, benchmark: dict, filename: str = '') -> 'HyperfoilFactory':
+    def benchmark(self, benchmark: dict) -> 'HyperfoilFactory':
         self._benchmark = benchmark
         file = StringIO()
         yaml.dump(benchmark, file)
         file.seek(0)
-        filename = filename or f"{benchmark['name']}.hf.yaml"
-        self.file(filename, file)
+        self.file('benchmark', file)
         return self
 
     def file(self, file_name: str, stream) -> 'HyperfoilFactory':

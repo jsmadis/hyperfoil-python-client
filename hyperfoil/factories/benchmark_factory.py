@@ -1,9 +1,13 @@
+from typing import Dict
+
 import yaml
 
 
 class BenchmarkFactory:
-    def __init__(self):
-        self._benchmark = {'http': []}
+    def __init__(self, benchmark: Dict = None):
+        if benchmark is None:
+            benchmark = {}
+        self._benchmark = {'http': [], **benchmark}
 
     def create(self):
         return self._benchmark

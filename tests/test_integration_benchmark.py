@@ -1,5 +1,5 @@
 from hyperfoil.clients import RunClient, BenchmarkClient
-from hyperfoil.resources import Run, BenchmarkResource
+from hyperfoil.resources import RunResource, BenchmarkResource
 
 
 def test_create(benchmark, benchmark_yaml):
@@ -23,7 +23,7 @@ def test_start(benchmark, benchmark_yaml):
     run = benchmark.start(benchmark_yaml['name'])
     assert run
     assert run['id']
-    assert isinstance(run, Run)
+    assert isinstance(run, RunResource)
     assert isinstance(run.client, RunClient)
 
 
@@ -37,5 +37,5 @@ def test_benchmark_with_file(benchmark, benchmark_file):
     run = benchmark.start(benchmark_file['name'])
     assert run
     assert run['id']
-    assert isinstance(run, Run)
+    assert isinstance(run, RunResource)
     assert isinstance(run.client, RunClient)

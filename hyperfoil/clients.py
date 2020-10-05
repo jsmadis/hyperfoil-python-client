@@ -1,7 +1,7 @@
 from typing import List
 
 from hyperfoil.defaults import DefaultClient, DefaultResource
-from hyperfoil.resources import Run, BenchmarkResource
+from hyperfoil.resources import RunResource, BenchmarkResource
 
 
 class BenchmarkClient(DefaultClient):
@@ -26,7 +26,7 @@ class BenchmarkClient(DefaultClient):
     def start(self, name: str, **kwargs):
         url = self.url + f"/{name}/start"
         response = self.rest.get(url=url, **kwargs)
-        return self._create_instance(response, klass=Run, client=self.parent.run)
+        return self._create_instance(response, klass=RunResource, client=self.parent.run)
 
 
 class RunClient(DefaultClient):
@@ -41,7 +41,7 @@ class RunClient(DefaultClient):
         response = self.rest.get(url=self.url, **kwargs)
         return [self._instance_klass(self, entity_id=name) for name in response.json()]
 
-    def read(self, run_id: str) -> Run:
+    def read(self, run_id: str) -> RunResource:
         return self._instance_klass(client=self, entity_id=run_id)
 
     def kill(self, run_id: str, **kwargs) -> bool:

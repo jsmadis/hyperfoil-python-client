@@ -3,7 +3,7 @@ from typing import Dict
 import yaml
 
 
-class BenchmarkFactory:
+class Benchmark:
     def __init__(self, benchmark: Dict = None):
         if benchmark is None:
             benchmark = {}
@@ -12,12 +12,12 @@ class BenchmarkFactory:
     def create(self):
         return self._benchmark
 
-    def load_benchmark(self, stream) -> 'BenchmarkFactory':
+    def load_benchmark(self, stream) -> 'Benchmark':
         benchmark = yaml.load(stream, Loader=yaml.Loader)
         self._benchmark.update(benchmark)
         return self
 
-    def add_host(self, host: str, shared_connections: int, **kwargs) -> 'BenchmarkFactory':
+    def add_host(self, host: str, shared_connections: int, **kwargs) -> 'Benchmark':
         self._benchmark['http'].append({
             'host': host,
             'sharedConnections': shared_connections,

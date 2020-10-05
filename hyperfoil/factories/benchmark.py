@@ -42,3 +42,6 @@ class Benchmark(collections.abc.MutableMapping):
 
     def update(self, benchmark=None, **kwargs):
         self._benchmark.update(benchmark, **kwargs)
+
+    def create(self):
+        return self._benchmark

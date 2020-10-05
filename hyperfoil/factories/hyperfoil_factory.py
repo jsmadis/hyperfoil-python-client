@@ -4,7 +4,7 @@ from io import StringIO
 import yaml
 
 from hyperfoil import HyperfoilClient
-from hyperfoil.resources import Benchmark
+from hyperfoil.resources import BenchmarkResource
 
 
 class HyperfoilFactory:
@@ -23,7 +23,7 @@ class HyperfoilFactory:
         for _, stream in self._files.values():
             stream.close()
 
-    def create(self) -> 'Benchmark':
+    def create(self) -> 'BenchmarkResource':
         self._client.benchmark.create(files=self._files)
         return self._client.benchmark.read(self._benchmark['name'])
 

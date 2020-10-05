@@ -1,7 +1,7 @@
 from hyperfoil.defaults import DefaultResource, DefaultClient
 
 
-class Benchmark(DefaultResource):
+class BenchmarkResource(DefaultResource):
 
     def __init__(self, client: DefaultClient = None, entity: dict = None, content_type: str = '',
                  entity_id: str = "") -> None:

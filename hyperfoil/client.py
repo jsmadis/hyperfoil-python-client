@@ -11,7 +11,7 @@ from hyperfoil.errors import ApiClientError
 class HyperfoilClient:
     def __init__(self, url: str) -> None:
         self._rest = RestApiClient(url=url)
-        self._benchmark = BenchmarkClient(self, instance_klass=resources.Benchmark)
+        self._benchmark = BenchmarkClient(self, instance_klass=resources.BenchmarkResource)
         self._run = RunClient(self, instance_klass=resources.Run)
         self._utils = UtilsClient(self)
 

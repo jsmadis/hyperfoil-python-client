@@ -23,7 +23,7 @@ def test_all_runs(run):
 
 
 def test_get_run_by_id(finished_benchmark, create_benchmark, run):
-    run_read = run.read(run_id=finished_benchmark['id'])
+    run_read = run.reload(run_id=finished_benchmark['id'])
     assert run_read
     assert run_read.get('id') == finished_benchmark['id']
     assert run_read.get('benchmark') == create_benchmark
@@ -35,7 +35,7 @@ def test_kill_run(benchmark, create_benchmark, run):
     assert run_resource
     killed = run.kill(run_resource['id'])
     assert killed
-    run_read = run.read(run_resource['id'])
+    run_read = run.reload(run_resource['id'])
     assert run_read
     assert run_read.get('id') == run_resource['id']
     assert bool(run_read.get('cancelled'))
@@ -46,7 +46,7 @@ def test_kill_run_resource(benchmark, create_benchmark, run):
     assert run_resource
     killed = run_resource.kill()
     assert killed
-    run_read = run.read(run_resource['id'])
+    run_read = run.reload(run_resource['id'])
     assert run_read
     assert run_read.get('id') == run_resource['id']
     assert bool(run_read.get('cancelled'))
@@ -77,10 +77,10 @@ def test_total_sessions_resource(finished_benchmark):
 
 
 def test_benchmark_resource_start(benchmark, create_benchmark, run):
-    mark = benchmark.read(create_benchmark)
+    mark = benchmark.reload(create_benchmark)
     run_resource = mark.start()
     assert run_resource
-    run_read = run.read(run_id=run_resource['id'])
+    run_read = run.reload(run_id=run_resource['id'])
     assert run_read
     assert run_read.get('id') == run_resource['id']
 

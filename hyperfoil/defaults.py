@@ -88,7 +88,7 @@ class DefaultResource(collections.abc.MutableMapping):
     def __iter__(self) -> Iterator:
         return iter(self.entity)
 
-    def read(self, **kwargs) -> 'DefaultResource':
+    def reload(self, **kwargs) -> 'DefaultResource':
         self._entity = None
         self._lazy_load(**kwargs)
         return self

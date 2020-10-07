@@ -4,7 +4,7 @@ from hyperfoil.resources import RunResource, BenchmarkResource
 
 def test_create(benchmark, benchmark_yaml):
     assert benchmark.create(params=benchmark_yaml)
-    mark = benchmark.read(benchmark_yaml['name'])
+    mark = benchmark.reload(benchmark_yaml['name'])
     assert mark.entity == benchmark_yaml
     assert isinstance(mark, BenchmarkResource)
     assert isinstance(mark.client, BenchmarkClient)

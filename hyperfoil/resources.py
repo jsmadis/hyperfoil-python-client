@@ -24,8 +24,7 @@ class RunResource(DefaultResource):
         return self.client.kill(self._entity_id)
 
     def is_finished(self) -> bool:
-        run = self.client.read(self._entity_id)
-        return run['cancelled'] or run['completed']
+        return self.entity['cancelled'] or self.entity['completed']
 
     def sessions(self):
         return self.client.sessions(self._entity_id)

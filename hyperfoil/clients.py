@@ -49,6 +49,10 @@ class RunClient(DefaultClient):
         response = self.rest.get(url=url, **kwargs)
         return response.ok
 
+    def is_finished(self, run_id: str) -> bool:
+        run = self.read(run_id)
+        return run.is_finished()
+
     def sessions(self, run_id: str, **kwargs) -> str:
         url = self._entity_url(run_id) + '/sessions'
         response = self.rest.get(url=url, **kwargs)

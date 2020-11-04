@@ -1,4 +1,6 @@
 import csv
+import random
+import string
 from io import StringIO
 
 import yaml
@@ -40,6 +42,14 @@ class HyperfoilFactory:
             stream.close()
             raise Exception('File already loaded')
         self._files[file_name] = (file_name, stream)
+        return self
+
+    def generate_random_file(self, filename: str, size: int) -> 'HyperfoilFactory':
+        file = StringIO()
+        payload = ''.join([random.choice(string.ascii_letters) for _ in range(size)])
+        file.write(payload)
+        file.seek(0)
+        self.file(filename, file)
         return self
 
     def csv_data(self, file_name: str, rows: [[str]], **kwargs) -> 'HyperfoilFactory':

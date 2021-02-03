@@ -1,4 +1,5 @@
 import csv
+import os
 import random
 import string
 from io import StringIO
@@ -59,3 +60,10 @@ class HyperfoilFactory:
         file.seek(0)
         self.file(file_name, file)
         return self
+
+    def save_files_locally(self, local_path: str):
+        for filename, file in self._files.values():
+            path = os.path.join(local_path, filename)
+            with open(path, 'w') as write_file:
+                write_file.write(file.read())
+                file.seek(0)
